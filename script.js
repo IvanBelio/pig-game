@@ -23,6 +23,11 @@ const init = function () {
   score1El.textContent = 0
   current0El.textContent = 0
   current1El.textContent = 0
+  player0El.classList.remove('player--winner')
+  player1El.classList.remove('player--winner')
+  player0El.classList.add('player--active')
+  player1El.classList.remove('player--active')
+
 }
 
 init()
@@ -47,22 +52,22 @@ btnRoll.addEventListener('click', () => {
   }
 })
 
-btnNew.addEventListener('click', () => {
-  console.log('New game')
-})
+btnNew.addEventListener('click', init)
 
 btnHold.addEventListener('click', () => {
   // Añadir currentScore al totalScore del jugador activo
   scores[activePlayer] += currentScore
   document.querySelector(`#score--${activePlayer}`).textContent = scores[activePlayer]
   // Vemos si finaliza la partida o cambiamos de jugador
-  if (scores[activePlayer] > 100) {
+  if (scores[activePlayer] > 10) {
     // Termina el juego
-    diceEl.style.display = 'none'
     document
       .querySelector(`.player--${activePlayer}`)
       .classList.add('player--winner')
+    document
+      .querySelector(`.player--${activePlayer}`)
       .classList.add('player--active')
+    diceEl.style.display = 'none'
   } else {
     // Cambiamos de jugador
     switchtPlayer()
