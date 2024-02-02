@@ -1,49 +1,71 @@
-// Seleccionamos elementos del DOM
-const newGameButton = document.querySelector('.btn--new')
-const rollDiceButton = document.querySelector('.btn--roll')
-const holdButton = document.querySelector('.btn--hold')
+const btnNew = document.querySelector('.btn--new')
+const btnRoll = document.querySelector('.btn--roll')
+const btnHold = document.querySelector('.btn--hold')
 const diceEl = document.querySelector('.dice')
-const current1 = document.querySelector('.current--0')
-const scorePlayer1 = document.querySelector('.score--0')
-const current2 = document.querySelector('.current--1')
-const scorePlayer2 = document.querySelector('.score--1')
+const score0El = document.querySelector('#score--0')
+const score1El = document.querySelector('#score--1')
+const current0El = document.querySelector('#current--0')
+const current1El = document.querySelector('#current--1')
+const player0El = document.querySelector('.player--0')
+const player1El = document.querySelector('.player--1')
 
-// Inicializamos la aplicacion
-initApp()
+// const btnHold = document.getElementsByClassName('btn--hold')[0]
 
-// Funcion para un nuevo juego
-newGameButton.addEventListener('click', function () {
-    // Poner los score a 0
-    // Quitar foto del dado
-    // Poner que empieze el jugador 1
+let currentScore, scores, activePlayer
+
+const init = function () {
+  currentScore = 0
+  activePlayer = 0
+  scores = [0, 0]
+  // diceEl.classList.add('hidden')
+  diceEl.style.display = 'none'
+  score0El.textContent = 0
+  score1El.textContent = 0
+  current0El.textContent = 0
+  current1El.textContent = 0
+}
+
+init()
+
+console.log(btnNew, btnRoll, btnHold)
+
+btnRoll.addEventListener('click', () => {
+  // sacas un número del 1 al 6
+  const dice = Math.trunc(Math.random() * 6) + 1
+
+  // mostrar el dado
+  diceEl.style.display = 'block'
+  diceEl.src = `dice-${dice}.png`
+
+  if (dice === 1) {
+    // TODO: cambiar de jugador
+    // variable activePlayer
+    // color css
+    // currentScore a 0
+    switchtPlayer()
+  } else {
+    // sumar el dado al current score
+    currentScore += dice
+    // TODO: seleccionar de forma dinámica el textContent
+    document.querySelector(`#current--${activePlayer}`).textContent =
+      currentScore
+    // current0El.textContent = currentScore
+  }
 })
-rollDiceButton.addEventListener('click', function () {
-    // Sacar un número del 1 al 6
-    const dice = Math.trunc(Math.random()*6) +1
 
-    //mostrar el dado
-    diceEl.src= `dice-${dice}.png`
-    if (dice === 1) {
-        // Pierder el turno
-    } else {
-        // Sumar el dado al current score
-    }
-})
-holdButton.addEventListener('click', function () {
-    // Sumar el numero del current al score del player
-    // Cambiar de jugador
-    // Si llega a 100, terminar el jugo
-    // Si se pasa de 100, no sumar la puntuacion y cambiar de jugador
+btnNew.addEventListener('click', () => {
+  console.log('New game')
 })
 
-// Llamar a fucnión init que haga:
-/*
-    1. El dado por defecto es invisible
-    2. Score1 y score2 a 0
-    3. currentScore1 y currentScore2 a 0
-    4. Cuando se hace click en el botón roll:
-        4.1. El dado se pone visible
-*/
-const initApp = function (){
+btnHold.addEventListener('click', () => {
+  switchtPlayer()
+})
 
+function switchtPlayer() {
+  document.querySelector(`#current--${activePlayer}`).textContent = 0
+  currentScore = 0
+  activePlayer = activePlayer === 0 ? 1 : 0
+  // más sencillo que con if-else
+  player0El.classList.toggle('player--active')
+  player1El.classList.toggle('player--active')
 }
