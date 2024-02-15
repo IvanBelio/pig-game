@@ -27,7 +27,6 @@ const init = function () {
   player1El.classList.remove('player--winner')
   player0El.classList.add('player--active')
   player1El.classList.remove('player--active')
-
 }
 
 init()
@@ -57,9 +56,10 @@ btnNew.addEventListener('click', init)
 btnHold.addEventListener('click', () => {
   // Añadir currentScore al totalScore del jugador activo
   scores[activePlayer] += currentScore
-  document.querySelector(`#score--${activePlayer}`).textContent = scores[activePlayer]
+  document.querySelector(`#score--${activePlayer}`).textContent =
+    scores[activePlayer]
   // Vemos si finaliza la partida o cambiamos de jugador
-  if (scores[activePlayer] > 10) {
+  if (scores[activePlayer] > 100) {
     // Termina el juego
     document
       .querySelector(`.player--${activePlayer}`)
